@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>สาธิต  I18N DEMO    </title>
+<link rel="stylesheet" href="css/html5.internationalization.css" type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script 
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	
+<script
+	src="javascript/html5.internationalization.js"></script>
+	
+	
+<script>
+
+	$(document).ready(function() {
+		getI18NString();	
+	});
+	
+
+	
+
+	
+	function callMain() {
+		console.log ("Fr3=" + window.i18nFrance);
+		console.log ("German3=" + window.i18nGerman);
+		console.log ("Britain3=" + window.i18nBritain);
+		var $x = $("h1[data-langkey]");
+		var y = $("h1[data-langkey]");
+		y[0].innerHTML = "H1 is changed";
+		y[0].style = "color:blue";
+		y[0].onclick=func1;
+		var z = y[0].style;
+		
+// 		console.log("test1_h1=" + x[0].attr("data-langkey"));
+// 		console.log("test2=" + x[0]);
+		var a = 10;
+// 		var y = $("h1[data-langkey]");
+// 		console.log ("inner html=" + y.text());
+// 		var z = 10;
+// 		y.innerHTML = "hiwijit";
+// 		y.innerText = "hi wijit innerText";
+// 		y[0].innerHTML = "hiwijit array";
+		//$("h1[data-langkey]").text("hi ws");
+		
+	}
+	
+	function func1() {
+		//alert ('in func 1 abc');
+		//func({ attr1: "VALUE1", attr2: 10 }, 1, "a");
+		func(function() { var abc = 10;});
+	}	
+	
+	function func(x){
+		   alert("type=" + typeof x + "   length=" + arguments.length + "  x=" + x);
+		   var c = [1, "two", 3 ];
+		   alert ("typf of c=" + typeof(c)  + "   length=" + c.length + "   element 3=" + c[2]);
+		   var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
+		   var obj = { name: "Jane", age: 30, city: "New York" };
+			
+		   var myJSON = JSON.stringify(obj);		// myJSON is string
+		   var b = 20;
+		     
+	}
+</script>		
+	
+</head>
+
+
+<body>
+<a href="#" onclick="func1()">English1</a> |
+<a href="#">ไทย</a>
+
+    <h1 data-langkey="WCG -- HTML5 Internationalization Example">WCG -- HTML5 Internationalization Example</h1>
+    <div id='languages'>
+        <img src='images/if_FR_167740.png' class='language' onclick="getLanguage()" data-lang='france' alt='French Flag' />
+        <img src="images/if_DE_167808.png" class='language'  data-lang='germany' alt='German Flag' />        
+        <img src="images/if_GB_167794.png" class='language'  data-lang='britain' alt='British Flag' />
+    </div>
+    <fieldset>
+    <legend>
+        <span data-langkey="Application Form">Application Form</span>
+    </legend>
+        <span data-langkey="Name">Name</span><br /><input type="text" /><br />
+        <span data-langkey="Company">Company</span><br /><input type='text' /><br />
+        <span data-langkey="Mobile No.">Mobile No.</span><br /><input type='text' /><br />
+        <span data-langkey="Telephone No.">Telephone No.</span><br /><input type='text' /><br /> 
+        <label data-langkey="Gender">Gender</label><br />    
+        <select>
+          <option data-langkey="Male">Male</option>
+          <option data-langkey="Female">Female</option>
+          <option data-langkey="Prefer not to say">Prefer not to say</option>          
+        </select>
+        
+    </fieldset>
+
+
+
+</body>
+</html>

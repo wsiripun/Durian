@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login Demo</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script 
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+
+	<div>
+		<h1>DEMO THREE SCENARIO: 1. CREATE A NEW USER, 2. LOG IN, 3. LOG OUT</h1>
+		<br>
+		<form  method="POST" action="loginmgr/create">
+			<table>
+				<tr>
+					<td colspan="2"><h3>CREATE A NEW USER</h3></td> 
+				</tr>
+				<tr>
+					<td>Name:</td>
+					<td><input type="text" name="loginID" /></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" name="password"/ ></td>
+				</tr>
+
+				<tr>
+					<td colspan="2"><input type="submit" value="CREATE A NEW USER" /></td>
+				</tr>				
+			</table>		
+		
+		
+		</form>
+
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div>
+		<h1>LOGGGING IN</h1>
+		<br>
+		<form method="POST" action="loginmgr/login">
+			<table>
+				<tr>
+					<td colspan="2">Login to the Tomcat-Demo application 111:</td>
+				</tr>
+				<tr>
+					<td>Name:</td>
+					<td><input type="text" name="loginID" /></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" name="password"/ ></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="Go" /></td>
+				</tr>
+			</table>
+		</form>
+		
+	</div>
+	<br>
+	<br>
+	<div>
+		<h1>LOGGING OUT</h1>
+
+		<form method="post" action="loginmgr/logoutABCD">
+			<input type="submit"  value="LOGOUT" />
+		</form>
+	</div>
+	
+	<script>
+		function submitNewUser() {
+
+			
+			$.post("/pattanasin/loginmgr/create",
+			        {
+						loginID: "johndoe",
+						password: "johnPW",
+
+			        },
+			        function(data,status){
+			            alert("RESULT: returnMessage=" + data.returnMessage + "   \nreturnCode=" + data.resultCode);
+			         });			
+		}
+		
+		function submitNewUser2() {
+			$.ajax({
+			    type: 'POST',
+			    url: '/pattanasin/loginmgr/create',
+			    contentType: 'application/x-www-form-urlencoded',
+			    data: { loginID: "johnDoe2", password: "johnPW2" },
+			    dataType: 'json',
+			    success:  function(data,status){
+			    	alert("RESULT_2:  returnMessage=" + data.returnMessage + "   \nreturnCode=" + data.resultCode);
+		        }
+
+			}); 			
+			
+			
+			
+		}
+	
+	</script>
+
+</body>
+</html>
