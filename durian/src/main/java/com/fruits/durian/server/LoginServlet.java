@@ -124,7 +124,7 @@ public class LoginServlet {
     	HttpSession session = request.getSession();
     	
     	session.setAttribute("userName", loginID);		// remember the loginID
-    	session.setMaxInactiveInterval(60);		// invalidate the session in 60 seconds
+    	session.setMaxInactiveInterval(60);		// invalidate inactive session in 60 seconds
     	
     	return returnResult;
     	
@@ -146,6 +146,7 @@ public class LoginServlet {
     	ReturnResult returnResult = new ReturnResult();
     	String loginID = request.getParameter("loginID");
     	String password = request.getParameter("password");
+
     	if (loginID.equals("") || password.equals("")) {
     		returnResult.setup(ErrorCode.FAIL, ErrorMessage.EMPTY_ID_PASSWORD);
     		return returnResult;
@@ -181,28 +182,31 @@ public class LoginServlet {
         	if (session == null) {
         		// Should not get here.
         		System.out.println("TEST 2:  STILL THERE IS NO SESSION");
+        		returnResult.setup(ErrorCode.FAIL, ErrorMessage.CANNOT_CREATE_SESSION);
+        		return returnResult;
         	} else {
         		System.out.println("TEST 2: JUST CREATE A NEW SESSION");
             	session.setAttribute("userName", loginID);		// remember the loginID
             	session.setMaxInactiveInterval(60);		// invalidate the session in 60 seconds
+
+            	String sessionID = session.getId();
+        		String remoteUserId = request.getRemoteUser();
+        		String wsCreateUserName = (String) session.getAttribute("userName");
+        		String extraMessage = "     sessionID=" + sessionID + "   remoteUserId=" + remoteUserId + "   wsCreateUserName=" + wsCreateUserName;     	
+            	returnResult.setup(ErrorCode.SUCCESS, ErrorMessage.LOGIN_SUCCESS + " loginID=" + loginID + extraMessage);
+            	return returnResult;
         	}
     	} else {
-    		System.out.println("TEST 1: SESSION EXIST.  DO NOTHING");
+    		System.out.println("TEST 1: SESSION EXIST.  USER ALREADY LOGIN");
     		String sessionID = session.getId();				// This is JSESSIONID cookie
     		String remoteUserId = request.getRemoteUser();
     		String wsCreateUserName = (String) session.getAttribute("userName");
-    		String extraMessage = "    \nsessionID=" + sessionID + "   remoteUserId=" + remoteUserId + "   wsCreateUserName=" + wsCreateUserName;		
+    		String extraMessage = "    sessionID=" + sessionID + "   remoteUserId=" + remoteUserId + "   wsCreateUserName=" + wsCreateUserName;		
     		returnResult.setup(ErrorCode.SUCCESS, ErrorMessage.ALREADY_LOGIN + " loginID=" + loginID + extraMessage);
     		return returnResult;
     	}
     	
-    	String sessionID = session.getId();
-		String remoteUserId = request.getRemoteUser();
-		String wsCreateUserName = (String) session.getAttribute("userName");
-		String extraMessage = "     \nsessionID=" + sessionID + "   remoteUserId=" + remoteUserId + "   wsCreateUserName=" + wsCreateUserName;
     	
-    	returnResult.setup(ErrorCode.SUCCESS, ErrorMessage.LOGIN_SUCCESS + " loginID=" + loginID + extraMessage);
-    	return returnResult;
 
     	
         //response.setHeader("Location", "/pattanasin/index.html");
